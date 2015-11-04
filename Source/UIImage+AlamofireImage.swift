@@ -272,6 +272,7 @@ extension UIImage {
 
         - returns: A new image object, or `nil` if the filter failed for any reason.
     */
+    @available(iOSApplicationExtension 8.0, *)
     public func af_imageWithAppliedCoreImageFilter(
         filterName: String,
         filterParameters: [String: AnyObject]? = nil) -> UIImage?
