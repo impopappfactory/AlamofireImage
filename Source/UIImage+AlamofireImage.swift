@@ -263,6 +263,7 @@ extension UIImage {
 
 // MARK: - Core Image Filters
 
+@available(iOS 8.0, *)
 extension UIImage {
     /**
         Returns a new version of the image using a CoreImage filter with the specified name and parameters.
