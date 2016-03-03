@@ -421,7 +421,7 @@ public class ImageDownloader {
                     let error: NSError = {
                         let failureReason = "ImageDownloader cancelled URL request: \(URLRequest.URLString)"
                         let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
-                        return NSError(domain: Error.Domain, code: NSURLErrorCancelled, userInfo: userInfo)
+                        return NSError(domain: AlamofireError.Domain, code: NSURLErrorCancelled, userInfo: userInfo)
                     }()
 
                     return Response(request: URLRequest, response: nil, data: nil, result: .Failure(error))
