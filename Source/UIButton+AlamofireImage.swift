@@ -81,8 +81,8 @@ extension UIButton {
     background image will not change its image until the image request finishes.
     `nil` by default.
     */
-    public func af_setBackgroundImageForState(state: UIControlState, URL: NSURL, placeHolderImage: UIImage? = nil) {
-        af_setBackgroundImageForState(state, URLRequest: URLRequestWithURL(URL), placeholderImage: placeHolderImage)
+    public func af_setBackgroundImageForState(state: UIControlState, URL: NSURL, placeHolderImage: UIImage? = nil, filter: ImageFilter? = nil) {
+        af_setBackgroundImageForState(state, URLRequest: URLRequestWithURL(URL), placeholderImage: placeHolderImage, filter: filter)
     }
 
     /**
@@ -105,6 +105,7 @@ extension UIButton {
         state: UIControlState,
         URLRequest: URLRequestConvertible,
         placeholderImage: UIImage?,
+        filter: ImageFilter? = nil,
         completion: (Response<UIImage, NSError> -> Void)? = nil)
     {
         guard !isImageURLRequest(URLRequest, equalToActiveRequestURLForState: state) else { return }
@@ -114,7 +115,7 @@ extension UIButton {
         let imageDownloader = af_imageDownloader ?? UIButton.af_sharedImageDownloader
         let imageCache = imageDownloader.imageCache
 
-        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: nil) {
+        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: filter?.identifier) {
             let response = Response<UIImage, NSError>(
                 request: URLRequest.URLRequest,
                 response: nil,
@@ -134,6 +135,7 @@ extension UIButton {
         // Download the image, then set the image with no transition because is not supported yet.
         let requestReceipt = imageDownloader.downloadImage(
             URLRequest: URLRequest,
+            filter: filter,
             completion: { [weak self] response in
                 guard let strongSelf = self else { return }
 
@@ -162,8 +164,8 @@ extension UIButton {
      - parameter placeholderImage: The image to be set initially until the image request finished. If `nil`, the
      image will not change its image until the image request finishes. `nil` by default.
      */
-    public func af_setImageForState(state: UIControlState, URL: NSURL, placeHolderImage: UIImage? = nil) {
-        af_setImageForState(state, URLRequest: URLRequestWithURL(URL), placeholderImage: placeHolderImage)
+    public func af_setImageForState(state: UIControlState, URL: NSURL, placeHolderImage: UIImage? = nil, filter: ImageFilter? = nil) {
+        af_setImageForState(state, URLRequest: URLRequestWithURL(URL), placeholderImage: placeHolderImage, filter: filter)
     }
 
     /**
@@ -185,6 +187,7 @@ extension UIButton {
         state: UIControlState,
         URLRequest: URLRequestConvertible,
         placeholderImage: UIImage?,
+        filter: ImageFilter? = nil,
         completion: (Response<UIImage, NSError> -> Void)? = nil)
     {
         guard !isImageURLRequest(URLRequest, equalToActiveRequestURLForState: state) else { return }
@@ -194,7 +197,7 @@ extension UIButton {
         let imageDownloader = af_imageDownloader ?? UIButton.af_sharedImageDownloader
         let imageCache = imageDownloader.imageCache
 
-        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: nil) {
+        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: filter?.identifier) {
             let response = Response<UIImage, NSError>(
                 request: URLRequest.URLRequest,
                 response: nil,
@@ -214,6 +217,7 @@ extension UIButton {
         // Download the image, then set the image with no transition because is not supported yet.
         let requestReceipt = imageDownloader.downloadImage(
             URLRequest: URLRequest,
+            filter: filter,
             completion: { [weak self] response in
                 guard let strongSelf = self else { return }
 
