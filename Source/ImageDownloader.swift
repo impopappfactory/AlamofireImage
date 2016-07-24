@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Alamofire
+//import Alamofire
 import Foundation
 
 #if os(iOS) || os(tvOS) || os(watchOS)
