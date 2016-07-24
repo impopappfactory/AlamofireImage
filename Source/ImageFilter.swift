@@ -303,6 +303,7 @@ public struct CircleFilter: ImageFilter {
 #if os(iOS) || os(tvOS)
 
 /// Blurs an image using a `CIGaussianBlur` filter with the specified blur radius.
+@available(iOS 8.0, *)
 public struct BlurFilter: ImageFilter {
     /// The blur radius of the filter.
     let blurRadius: UInt
