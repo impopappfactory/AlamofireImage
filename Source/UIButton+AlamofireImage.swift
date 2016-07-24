@@ -123,6 +123,7 @@ extension UIButton {
         state: UIControlState,
         URL: NSURL,
         placeHolderImage: UIImage? = nil,
+        filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: dispatch_queue_t = dispatch_get_main_queue(),
         completion: (Response<UIImage, NSError> -> Void)? = nil)
@@ -130,6 +131,7 @@ extension UIButton {
         af_setImageForState(state,
             URLRequest: URLRequestWithURL(URL),
             placeholderImage: placeHolderImage,
+            filter: filter,
             progress: progress,
             progressQueue: progressQueue,
             completion: completion
@@ -159,6 +161,7 @@ extension UIButton {
         state: UIControlState,
         URLRequest: URLRequestConvertible,
         placeholderImage: UIImage? = nil,
+        filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: dispatch_queue_t = dispatch_get_main_queue(),
         completion: (Response<UIImage, NSError> -> Void)? = nil)
@@ -171,7 +174,7 @@ extension UIButton {
         let imageCache = imageDownloader.imageCache
 
         // Use the image from the image cache if it exists
-        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: nil) {
+        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: filter?.identifier) {
             let response = Response<UIImage, NSError>(
                 request: URLRequest.URLRequest,
                 response: nil,
@@ -195,7 +198,7 @@ extension UIButton {
         let requestReceipt = imageDownloader.downloadImage(
             URLRequest: URLRequest,
             receiptID: downloadID,
-            filter: nil,
+            filter: filter,
             progress: progress,
             progressQueue: progressQueue,
             completion: { [weak self] response in
@@ -258,6 +261,7 @@ extension UIButton {
         state: UIControlState,
         URL: NSURL,
         placeHolderImage: UIImage? = nil,
+        filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: dispatch_queue_t = dispatch_get_main_queue(),
         completion: (Response<UIImage, NSError> -> Void)? = nil)
@@ -265,6 +269,7 @@ extension UIButton {
         af_setBackgroundImageForState(state,
             URLRequest: URLRequestWithURL(URL),
             placeholderImage: placeHolderImage,
+            filter: filter,
             completion: completion)
     }
 
@@ -291,6 +296,7 @@ extension UIButton {
         state: UIControlState,
         URLRequest: URLRequestConvertible,
         placeholderImage: UIImage? = nil,
+        filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: dispatch_queue_t = dispatch_get_main_queue(),
         completion: (Response<UIImage, NSError> -> Void)? = nil)
@@ -303,7 +309,7 @@ extension UIButton {
         let imageCache = imageDownloader.imageCache
 
         // Use the image from the image cache if it exists
-        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: nil) {
+        if let image = imageCache?.imageForRequest(URLRequest.URLRequest, withAdditionalIdentifier: filter?.identifier) {
             let response = Response<UIImage, NSError>(
                 request: URLRequest.URLRequest,
                 response: nil,
@@ -329,7 +335,7 @@ extension UIButton {
             receiptID: downloadID,
             progress: progress,
             progressQueue: progressQueue,
-            filter: nil,
+            filter: filter,
             completion: { [weak self] response in
                 guard let strongSelf = self else { return }
 
